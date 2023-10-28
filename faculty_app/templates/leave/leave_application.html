@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Leave Application{% endblock %}
+
+{% block content %}
+<div class="leave_pplications" style="margin-top: 90px; margin-left: 120px">
+
+  <form method="post">
+    <h2>Leave Applications</h2>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Apply</button>
+  </form>
+  </div>
+{% endblock %}
+
+

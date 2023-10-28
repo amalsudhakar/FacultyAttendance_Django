@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login">
+  <h2>Admin Login</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+  <p>Admin login: <a href="{% url 'admin_login' %}">Click here</a></p>
+</div>
+{% endblock %}

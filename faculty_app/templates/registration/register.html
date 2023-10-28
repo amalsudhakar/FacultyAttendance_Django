@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="registration">
+  <form method="post">
+    <h2>Faculty Registration</h2>
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-field {% if field.errors %}error{% endif %}">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}
+          <span class="error-message">{{ error }}</span>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button type="submit">Register</button>
+  </form>
+</div>
+
+<script>
+    const subjects = {
+  MCA: [
+    { value: 'COA', label: 'Computer Architecture and Analysis' },
+    { value: 'AOP', label: 'Art of Programming' },
+  ],
+  MBA: [
+    { value: 'RM', label: 'Research Methodology' },
+    { value: 'BA', label: 'Business administration' },
+  ],
+  BHM: [
+    { value: 'HM', label: 'Hotel Management' },
+    { value: 'MH', label: 'Management Hotel' },
+  ],
+  MCOM: [
+    { value: 'AC', label: 'Accounting' },
+    { value: 'CO', label: 'Commerce' },
+  ],
+};
+
+const departmentSelect = document.querySelector('#department');
+const subjectSelect = document.querySelector('#subject');
+
+// Initialize subject options to only show the default options
+let initialSubjects = [
+  { value: '', label: '' },
+  { value: 'COA', label: 'Computer Architecture and Analysis' },
+  { value: 'AOP', label: 'Art of Programming' },
+];
+subjectSelect.innerHTML = initialSubjects.map(subject => `<option value="${subject.value}">${subject.label}</option>`).join('');
+
+departmentSelect.addEventListener('change', () => {
+  // Get the selected department value
+  const selectedDepartment = departmentSelect.value;
+
+  // Update the subject options based on the selected department
+  const departmentSubjects = subjects[selectedDepartment];
+  let subjectOptions = [
+    { value: '', label: '' },
+    ...departmentSubjects,
+  ];
+  subjectSelect.innerHTML = subjectOptions.map(subject => `<option value="${subject.value}">${subject.label}</option>`).join('');
+});
+
+  </script>
+  
+
+<style>
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3px;
+  }
+
+  .form-field label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .form-field input,
+  .form-field select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .form-field.error label {
+    color: red;
+  }
+
+  .form-field.error input,
+  .form-field.error select {
+    border-color: red;
+  }
+
+  .form-field .error-message {
+    color: red;
+    font-size: 14px;
+  }
+
+  
+</style>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Faculty Attendance System{% endblock %}</title>
+   {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+    var prevScrollpos = window.pageYOffset;
+  window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+      document.querySelector(".navbar").classList.remove("hide");
+    } else {
+      document.querySelector(".navbar").classList.add("hide");
+    }
+    prevScrollpos = currentScrollPos;
+  }
+
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+  <a href="{% url 'home' %}" class="navbar-button">Home</a>
+  {% if user.is_authenticated %}
+    <a href="{% url 'profile' %}" class="navbar-button">Profile</a>
+    <a href="{% url 'attendance' %}" class="navbar-button">Attendance</a>
+    <a href="{% url 'leave_management' %}" class="navbar-button">Leave</a>
+    <a href="{% url 'feedback' %}" class="navbar-button">Feedback</a>
+    <a href="{% url 'logout' %}" class="navbar-button">Logout</a>
+  
+  {% else %}
+    <a href="{% url 'login' %}" class="navbar-button">Login</a>
+    <a href="{% url 'register' %}" class="navbar-button">Register</a>
+
+  {% endif %}
+</nav>
+    {% block content %}{% endblock %}
+</body>
+</html>

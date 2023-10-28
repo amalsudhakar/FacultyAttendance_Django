@@ -1,0 +1,41 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <header style="padding: 20px;">
+    <h1>Mark Your Attendance</h1>
+  </header>
+  <main style="padding: 20px;">
+    <center>
+    <button onclick="getLocation()" style="background-color: #4CAF50; color: #fff; border: none; padding: 10px 20px; cursor: pointer;">Get Your Current Location</button>
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" name="lat" id="lat" style="display:none">
+      <input type="text" name="lng" id="lng" style="display:none">
+      <br>
+      <button id="mark-attendance-btn" type="submit" style="display:none; padding: 10px 20px; background-color: #4CAF50; color: #fff; border: none; padding: 10px 20px; cursor: pointer;">Mark Attendance</button>
+    </form>
+    {% if message %}
+      <p style="color: red;">{{ message }}</p>
+    {% endif %}
+  </main>
+</center>
+
+<script>
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(fillLocationFields);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function fillLocationFields(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        document.getElementById('lat').value = lat;
+        document.getElementById('lng').value = lng;
+        document.getElementById("mark-attendance-btn").style.display = "block";
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Attendance{% endblock %}
+
+{% block content %}
+  <h1>Attendance</h1>
+
+  <h2>User Details</h2>
+  <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+  <p><strong>Username:</strong> {{ user.username }}</p>
+
+  <h2>Department Details</h2>
+  <p><strong>Employee Id:</strong> {{ faculty.emp_id }}</p>
+
+{% if leaves %}
+  {% for leave in leaves %}
+    {% if leave.status == 'approved' %}
+      {% if leave.start_date|date:'Y-m-d' <= today %}
+        <h2><strong>You are on leave</strong></h2>
+      {% endif %}
+      <button class="navbar-button" style="display:none;" disabled>Mark attendance</button>
+    {% else %}
+      {% if leave.start_date|date:'Y-m-d' <= today %}
+        <h2><strong>You are on leave</strong></h2>
+      {% endif %}
+      <a href="{% url 'mark_attendance' %}" class="navbar-button">Mark attendance</a>
+    {% endif %}
+  {% endfor %}
+{% else %}
+  <a href="{% url 'mark_attendance' %}" class="navbar-button">Mark attendance</a>
+{% endif %}
+
+  <a href="{% url 'view_attendance' %}" class="navbar-button">View attendance</a>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+  {% if user.is_authenticated %}
+    <a href="{% url 'admin_home' %}" class="navbar-button">Home</a>
+    <a href="{% url 'user_list' %}" class="navbar-button">Users</a>
+    <a href="{% url 'admin_leave' %}" class="navbar-button">Leave</a>
+    <a href="{% url 'admin_feedback' %}" class="navbar-button">Feedback</a>
+    <a href="{% url 'admin_view_attendance' %}" class="navbar-button">View Attendance</a>
+    <a href="{% url 'admin_config' %}" class="navbar-button">Edit Campus Location</a>
+    <a href="{% url 'logout' %}" class="navbar-button">Logout</a>
+  {% endif %}
+</nav>
+    {% block content %}{% endblock %}
+</body>
+</html>
